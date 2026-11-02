@@ -24,4 +24,6 @@ public class OllamaController {
 
        return ResponseEntity.ok(response);
     }
+
+
 }

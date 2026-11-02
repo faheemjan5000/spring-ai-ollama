@@ -2,12 +2,11 @@ package spring.ai.ollama.spring_ai.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spring.ai.ollama.spring_ai.model.ActorsFilms;
 import spring.ai.ollama.spring_ai.service.ActorFilmsService;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,5 +24,14 @@ public class AiActorFilmsController {
             @PathVariable String actorName) {
         log.info("AiActorFilmsController.getActorFilms called with actorName: {}", actorName);
         return actorFilmsService.getActorFilms(actorName);
+    }
+
+    @GetMapping("/list")
+    public List<ActorsFilms> getListActorFilms(
+            @RequestParam String firstActorName,
+            @RequestParam String secondActorName,
+            @RequestParam String thirdActorName) {
+        log.info("AiActorFilmsController.getListActorFilms called with actorNames: {}, {}, {}", firstActorName, secondActorName, thirdActorName);
+        return actorFilmsService.getListActorFilms(firstActorName, secondActorName, thirdActorName);
     }
 }
