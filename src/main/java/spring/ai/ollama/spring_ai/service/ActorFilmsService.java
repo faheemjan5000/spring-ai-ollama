@@ -30,6 +30,7 @@ public class ActorFilmsService {
     }
 
     public List<ActorsFilms> getListActorFilms(String firstActorName,String secondActorName,String thirdActorName){
+        log.info("ActorFilmsService.getListActorFilms called with actorNames: {}, {}, {}", firstActorName, secondActorName, thirdActorName);
         String prompt = """
         Generate the filmographies for the following three actors:
         1. %s
@@ -48,11 +49,13 @@ public class ActorFilmsService {
                 secondActorName,
                 thirdActorName
         );
+        log.info("Prompt given to the system is : {} ",prompt);
+        log.info("Calling AI.....");
         List<ActorsFilms> films = chatClient.prompt()
                 .user(prompt)
                 .call()
                 .entity(new ParameterizedTypeReference<List<ActorsFilms>>() {},spec -> spec.useProviderStructuredOutput() );
-
+        log.info("actor films got from AI : {}", films);
         return films;
     }
 }
