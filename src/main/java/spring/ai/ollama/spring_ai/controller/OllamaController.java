@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/ollama")
+@RequestMapping("/ollama/demo")
 public class OllamaController {
 
     private final ChatClient chatClient;
@@ -17,12 +17,13 @@ public class OllamaController {
 
     @GetMapping("/{prompt}")
     public ResponseEntity<String> getAnswer(@PathVariable String prompt){
-       String response = chatClient
+       var metaData = chatClient
                .prompt(prompt)
                .call()
-               .content();
-
-       return ResponseEntity.ok(response);
+               .chatResponse()
+               .getMetadata();
+        System.out.println("MetaData from Ollama: " + metaData);
+       return ResponseEntity.ok(String.valueOf(metaData));
     }
 
 
