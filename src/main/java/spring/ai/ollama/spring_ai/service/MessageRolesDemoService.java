@@ -28,7 +28,9 @@ public class MessageRolesDemoService {
                         """;
 
     public MessageRolesDemoService(ChatClient.Builder builder){
-        this.chatClient=builder.build();
+        this.chatClient=builder
+                //.defaultSystem(SYSTEM_MESSAGE) can use system message here but it will be default for all the ai calls where this chatClient is used
+                .build();
     }
 
     public String checkPolicy(String message){
