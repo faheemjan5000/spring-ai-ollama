@@ -19,6 +19,6 @@ public class InsurancePolicyController {
 
     @GetMapping("/check")
     public ResponseEntity<String> checkPolicy(@RequestParam String message){
-        return ResponseEntity.ok(messageRolesDemoService.checkPolicy(message));
+        return ResponseEntity.ok(messageRolesDemoService.checkPolicy2(message));
     }
 }
