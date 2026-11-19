@@ -1,29 +1,22 @@
 package spring.ai.ollama.spring_ai.controller;
 
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.ai.ollama.spring_ai.service.OllamaService;
 
 @RestController
 @RequestMapping("/ollama/demo")
 public class OllamaController {
 
-    private final ChatClient chatClient;
+    private final OllamaService ollamaService;
 
-    public OllamaController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+    public OllamaController(OllamaService ollamaService) {
+        this.ollamaService = ollamaService;
     }
 
     @GetMapping("/{prompt}")
-    public ResponseEntity<String> getAnswer(@PathVariable String prompt){
-       var metaData = chatClient
-               .prompt(prompt)
-               .call()
-               .chatResponse()
-               .getMetadata();
-        System.out.println("MetaData from Ollama: " + metaData);
-       return ResponseEntity.ok(String.valueOf(metaData));
+    public String getAnswer(@PathVariable String prompt,
+                             @RequestParam(defaultValue = "default") String conversationId) {
+        return ollamaService.getAnswer(prompt, conversationId);
     }
 
 
